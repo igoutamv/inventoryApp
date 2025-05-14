@@ -1,0 +1,49 @@
+@tailwind base;
+@tailwind components;
+@tailwind utilities;
+
+html{
+  scroll-behavior: smooth;
+
+}
+
+.App {
+  display: flex;
+  flex-direction: column;
+  width: 100%;
+  margin: 0;
+  overflow: hidden;
+}
+
+.contact-us{
+  height: 80vh;
+}
+
+
+
+@keyframes gradientAnimation {
+    0% {
+      background-position: 0% 50%;
+    }
+    50% {
+      background-position: 100% 50%;
+    }
+    100% {
+      background-position: 0% 50%;
+    }
+  }
+  
+  .gradient-animation {
+    background: linear-gradient(270deg, #DD97F8, #FFB6C1, #FF6347);
+    background-size: 400% 400%;
+    animation: gradientAnimation 15s ease infinite;
+  }
+
+/* Add padding to the main content area to account for the fixed navbar */
+.flex.flex-1.w-full.p-2.gap-2 {
+  padding-top: 4rem; /* 64px, equivalent to h-16 */
+}
+
+
+
+  
