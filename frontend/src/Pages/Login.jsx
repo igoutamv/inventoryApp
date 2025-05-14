@@ -1,14 +1,12 @@
 import { useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 import { useAuth } from "../Context/AuthContext";
-import Toast from "../components/Toast";
 
 function Login() {
   const [id, setId] = useState("");
   const [pass, setPass] = useState("");
   const [isLoading, setIsLoading] = useState(false);
   const [error, setError] = useState("");
-  const [toast, setToast] = useState({ show: false, message: "", type: "success" });
   const { login, isAuthenticated } = useAuth();
   const navigate = useNavigate();
 
@@ -20,28 +18,15 @@ function Login() {
     try {
       await login(id, pass);
       if (id === "admin" && pass === "1234") {
-        setToast({
-          show: true,
-          message: "Login successful!",
-          type: "success"
-        });
+        // You can add success UI feedback here if needed
         setTimeout(() => {
           navigate("/dashboard");
         }, 1500);
       } else {
-        
-        setToast({
-          show: true,
-          message: "Details Mismatch!",
-          type: "error"
-        });
+        setError("Details Mismatch!");
       }
     } catch (err) {
-      setToast({
-        show: true,
-        message: "An error occurred during login",
-        type: "error"
-      });
+      setError("An error occurred during login");
     } finally {
       setIsLoading(false);
     }
@@ -53,18 +38,11 @@ function Login() {
 
   return (
     <div className="min-h-screen flex items-center justify-center bg-gradient-to-br from-[#F3F2EE] to-[#D6FFFA]">
-            {toast.show && (
-        <Toast
-          message={toast.message}
-          type={toast.type}
-          onClose={() => setToast({ ...toast, show: false })}
-        />
-      )}
       <div className="bg-white w-1/4 p-3 border rounded-lg shadow-sm">
-      <div className="w-full ">
-        <img src=".\src\assets\Images\login.png" alt="login" />
-      </div>
-      <form className=" space-y-4" onSubmit={handleLogin}>
+        <div className="w-full ">
+          <img src=".\src\assets\Images\login.png" alt="login" />
+        </div>
+        <form className="space-y-4" onSubmit={handleLogin}>
           <div className="rounded-md mt-4 shadow-sm -space-y-px">
             <div className="mb-2">
               <label htmlFor="user-id" className="sr-only">
@@ -75,7 +53,7 @@ function Login() {
                 name="user-id"
                 type="text"
                 required
-                className=" appearance-none rounded relative block w-full px-3 py-2 border  text-gray-500 focus:outline-none  focus:z-10 sm:text-sm"
+                className="appearance-none rounded relative block w-full px-3 py-2 border text-gray-500 focus:outline-none focus:z-10 sm:text-sm"
                 placeholder="Enter ID"
                 value={id}
                 onChange={(e) => setId(e.target.value)}
@@ -90,7 +68,7 @@ function Login() {
                 name="password"
                 type="password"
                 required
-                className="appearance-none rounded relative block w-full px-3 py-2 border text-gray-900 focus:outline-none  focus:z-10 sm:text-sm"
+                className="appearance-none rounded relative block w-full px-3 py-2 border text-gray-900 focus:outline-none focus:z-10 sm:text-sm"
                 placeholder="Enter Password"
                 value={pass}
                 onChange={(e) => setPass(e.target.value)}
@@ -140,10 +118,8 @@ function Login() {
             </button>
           </div>
         </form>
-
       </div>
-
-    </div>  
+    </div>
   );
 }
 
